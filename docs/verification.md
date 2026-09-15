@@ -13,12 +13,18 @@
 
 测试表保留供部署者检查，具体资源链接在私有部署记录中。未用真实账单进行验收。
 
+## v0.2.0 工具与搜索更新
+
+- 新加坡 FC 已部署，ChatGPT 刷新后实际加载 505 个不同工具，包括文档搜索和 Wiki 搜索。
+- GitHub Actions 已通过类型检查、OAuth 回归和构建。
+- 使用新授权直接调用云文档搜索成功，业务码 0，返回匹配项。ChatGPT 搜索对话的端到端结果仍在核验。
+
 ## 浏览器兼容与权限经验
 
 - 原生表单在 `Referrer-Policy: no-referrer` 下可能携带 `Origin: null`。使用 `strict-origin` 保留来源校验，同时不发送路径与查询参数。
 - CSP 的 `form-action` 会检查重定向链；飞书登录经过 open、accounts、passport、login 官方域名。
 - 每个授权事务使用独立 Cookie，避免多个登录窗口互相覆盖。
-- 云文档搜索需要 `drive:drive.search:readonly`，新增后需更新服务 OAuth scope 并重新连接。
+- 云文档搜索需要 `drive:drive.search:readonly`，Wiki 搜索另需 `search:docs:read`；新增后需更新服务 OAuth scope 并重新连接。
 - `offline_access` 必须在飞书应用用户权限中开通；仅在 OAuth 请求中填写不够。
 - `base:record:read` 用于特定记录读取；搜索和列表需 `base:record:retrieve`。权限调整后需要重新连接。
 
